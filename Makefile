@@ -1,8 +1,13 @@
 build:
-	go build -o bin/gobank
+	docker build -t gobank .
 
 run: build
-	./bin/gobank
+	docker run -p 3000:3000 -d gobank
+
+stop:
+	docker stop $$(docker ps -q --filter ancestor=gobank)
 
 test:
 	go test -v ./...
+
+.PHONY: build run stop test
